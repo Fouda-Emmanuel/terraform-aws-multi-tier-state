@@ -91,7 +91,7 @@ Infrastructure as Code with Terraform + centralized state management in S3.
 
 ## Prerequisites
 
-- Terraform >= 6.0
+- Terraform >= 1.10.2
 - AWS CLI configured
 - AWS account
 
