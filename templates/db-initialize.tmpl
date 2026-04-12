@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+sudo apt update
+sudo apt install git mysql-client -y
+
+cd /home/ubuntu
+
+# idempotent clone
+if [ ! -d "vprofile-project" ]; then
+  git clone -b local https://github.com/hkhcoder/vprofile-project.git
+fi
+
+# wait for DB to be ready
+until mysql -h ${rds_endpoint} -P 3306 -u ${dbuser} -p${dbpass} --ssl-mode=REQUIRED -e "SELECT 1" 2>/dev/null; do
+  echo "Waiting for DB..."
+  sleep 10
+done
+
+# import database
+mysql -h ${rds_endpoint} -P 3306 -u ${dbuser} -p${dbpass} ${dbname} \
+--ssl-mode=REQUIRED < /home/ubuntu/vprofile-project/src/main/resources/db_backup.sql

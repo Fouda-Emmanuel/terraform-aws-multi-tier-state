@@ -57,6 +57,15 @@ variable "instance_count" {
   description = "number of EC2 instances for your application stack"
   default     = "1"
 }
+variable "ami_id" {
+  description = "Ubuntu AMI ID"
+  default     = "ami-0ec10929233384c7f"
+}
+
+variable "instance_type" {
+  description = "Instance Type"
+  default     = "t3.micro"
+}
 
 variable "vpc_name" {
   description = "VPC name tag"
